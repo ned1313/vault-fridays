@@ -1,6 +1,6 @@
 # Configuring and Using the AWS Authentication Method
 
-In this guide we are going to enable the AWS authentication method in Vault and use that authentication method to provision Vault tokens for clients and assign them Vault policies based on AWS group membership.
+In this guide we are going to enable the AWS authentication method in Vault and use that authentication method to provision Vault tokens for clients and assign them Vault policies.
 
 ## Authentication Methods
 
@@ -37,3 +37,7 @@ We walk through the following steps:
 1. Verify authentication using the AWS IAM user
 
 The commands for walking through this process are in the commands.sh file.
+
+## Future Improvements
+
+It is not clear to me how Vault resolves roles when trying to use the authentication method as a user. You might not be able to use the `vault login` command to do so, and instead need to rely on the API? The issue I have here is deciding which policies to assign an authenticated client. With the `ec2` method you can look at the instance profile and role tags to make an authentication decision in Vault. The `iam` method support principals that are users or roles, and the arn value can include a wildcard. You could use paths on the IAM side to influence Vault policy assignment, but that seems like the wrong approach. You cannot use group membership, although that would be nice. There is an integration with the Identity secrets engine that might bear fruit. Further investigation is warranted.
